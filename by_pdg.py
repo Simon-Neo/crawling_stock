@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import yfinance as yf
 
-ticker = "vrt"
-
 def find_data(soup, find_data):
     # Find the table containing the data
     table = soup.find('table')
@@ -37,6 +35,8 @@ if __name__ == "__main__":
     # peg = info.get('pegRatio', 'N/A')
     # print("yh peg", peg)
 
+    ticker = "PANW"
+
     url = f"https://stockanalysis.com/stocks/{ticker}/financials/ratios/"
 
     try:
@@ -66,6 +66,16 @@ if __name__ == "__main__":
     good_price = growth_rate * eps
     print()
     print(f"{ticker} peg 1 price is : {int(good_price)}", )
+    print()
+
+    # forward per
+    forward_per = float(find_data(soup, "Forward PE"))
+    print("forward_per", forward_per)
+    mul_forward_per = per / forward_per
+    print("mul_forward_per", mul_forward_per)
+
+
+    print("forward_good_price", int(good_price * mul_forward_per))
 
 
 
